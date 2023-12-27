@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'angular-phone-number-input' title`, () => {
+  it(`should have the 'angular-phone-number-input-app' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('angular-phone-number-input');
+    expect(app.title).toEqual('angular-phone-number-input-app');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-phone-number-input');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, angular-phone-number-input-app');
   });
 });
