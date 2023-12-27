@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-phone-number-input": {
+    "angular-phone-number-input-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/angular-phone-number-input",
+            "outputPath": "dist/angular-phone-number-input-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -57,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "angular-phone-number-input:build:production"
+              "buildTarget": "angular-phone-number-input-app:build:production"
             },
             "development": {
-              "buildTarget": "angular-phone-number-input:build:development"
+              "buildTarget": "angular-phone-number-input-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -68,7 +68,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "angular-phone-number-input:build"
+            "buildTarget": "angular-phone-number-input-app:build"
           }
         },
         "test": {
@@ -87,6 +87,39 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        }
+      }
+    },
+    "angular-phone-number-input": {
+      "projectType": "library",
+      "root": "projects/angular-phone-number-input",
+      "sourceRoot": "projects/angular-phone-number-input/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/angular-phone-number-input/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/angular-phone-number-input/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/angular-phone-number-input/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/angular-phone-number-input/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
           }
         }
       }

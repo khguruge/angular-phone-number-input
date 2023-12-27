@@ -1,0 +1,42 @@
+<div class="wrap flex align-center" [class.active]="inputFocused" [class.error]="error">
+    <div class="flex">
+        @if(selectedCountry){
+        <div class="flex align-center" (click)="toggleModal()">
+            <span class="flag" [innerHTML]="getIcon(selectedCountry.flag)"></span>
+
+            <svg class="ml-5" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M4.99959 5.13698L0.725586 0.862976H9.27359L4.99959 5.13698Z" fill="black" fill-opacity="0.6" />
+            </svg>
+        </div>
+        <span class="text ml-5">{{selectedCountry.dialCode}}</span>
+        }@else{
+        <div class="flex align-center" (click)="toggleModal()">
+            <span class="flag" [innerHTML]="getIcon(globeSVG)"></span>
+            <svg class="ml-5" xmlns="http://www.w3.org/2000/svg" width="10" height="6" viewBox="0 0 10 6" fill="none">
+                <path d="M4.99959 5.13698L0.725586 0.862976H9.27359L4.99959 5.13698Z" fill="black" fill-opacity="0.6" />
+            </svg>
+        </div>
+        }
+
+    </div>
+
+    <input class="input-box text" type="number" placeholder="" [(ngModel)]="value" [disabled]="disabled"
+        (input)="onChange(value); onInputChanged()" (blur)="onBlur(); onTouched()" (focus)="onFocus()" />
+
+    @if(showModal){
+    <div class="modal-wrap">
+        <div>
+            <input class="search-box" (input)="onSearchChange($event)" placeholder="Search" />
+        </div>
+        <div class="country-list">
+            <div style="display: flex;" *ngFor="let data of dataSet | keyvalue">
+                <div class="modal-country-wrap flex" (click)="selectCountry(data)">
+                    <span class="flag" [innerHTML]="getIcon(data.value.flag)"></span>
+                    <span class="modal-country ml-5">{{data.value.dialCode}}</span>
+                    <span class="modal-country ml-5">{{data.value.country}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+</div>
