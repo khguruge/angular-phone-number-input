@@ -31,7 +31,7 @@ input[type='number'] {
             overflow: -moz-scrollbars-none;
             overflow-y: scroll;
             width: 280px;
-            height: 250px;
+            max-height: 250px;
             &::-webkit-scrollbar {
                 display: none;
             }
