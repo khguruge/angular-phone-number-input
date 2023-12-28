@@ -35,21 +35,110 @@ import { Country } from '../data-types/country';
 })
 export class AngularPhoneNumberInput implements ControlValueAccessor, Validator {
   @Input() error: boolean | undefined = false;
+  @Input() defaultCountry!: string;
+  @Input() preferredCountries!: string[];
+
   sanitizer = inject(DomSanitizer);
   countryList: CountryData = Countries;
   dataSet: CountryData = Countries;
   showModal: boolean = false;
-  // selectedCountry: Country = this.countryList['LK'];
   selectedCountry!: Country;
-
   inputFocused: boolean = false;
   disabled: boolean = false;
   value!: string;
   globeSVG: string = globeSVG;
 
+  /** Callback function triggered on value change. */
+  onChange: (value: string) => void = () => { };
+
+  /** Callback function triggered on input touch. */
+  onTouched: () => void = () => { };
+
+  /** Handles the input blur event. */
+  onBlur = () => {
+    this.inputFocused = false;
+  };
+
   /**
-     * Toggles the visibility of the modal.
-     */
+   * Handles the input focus event.
+   */
+  onFocus = (): void => {
+    this.inputFocused = true;
+  };
+
+  /**
+   * Writes a new value to the input.
+   * @param obj - The new value.
+   */
+  writeValue = (value: string): void => {
+    if (value !== undefined) {
+      this.extractValues(value)
+    }
+  };
+
+  /**
+   * Registers a callback function to be executed when the input value changes.
+   * @param fn - The callback function.
+   */
+  registerOnChange = (fn: () => void): void => {
+    this.onChange = fn;
+  };
+
+  /**
+   * Registers a callback function to be executed when the input is touched.
+   * @param fn - The callback function.
+   */
+  registerOnTouched = (fn: () => void): void => {
+    this.onTouched = fn;
+  };
+
+  /**
+   * Sets the disabled state of the input.
+   * @param isDisabled - The disabled state.
+   */
+  setDisabledState = (isDisabled: boolean): void => {
+    this.disabled = isDisabled;
+  };
+
+  /**
+   * Initializes default country and preferred countries on component initialization.
+   * Calls setDefaultCountry and setPreferredCountries methods.
+   */
+  ngOnInit() {
+    this.setDefaultCountry();
+    this.setPreferredCountries();
+  }
+
+  /**
+   * Sets the default country based on the provided defaultCountry value.
+   * If the default country exists in the countryList, sets the selectedCountry accordingly.
+   */
+  setDefaultCountry = () => {
+    const defCountryData = this.countryList[this.defaultCountry];
+    this.selectedCountry = defCountryData ?? null;
+  }
+
+  /**
+   * Sets preferred countries based on the provided preferredCountries array.
+   * Filters the countryList to contain only the preferred countries if they exist.
+   */
+  setPreferredCountries = () => {
+    if (this.preferredCountries && this.preferredCountries.length > 0) {
+      // Filter the countries to include only preferred countries
+      const preferredCountryList = Object.fromEntries(
+        Object.entries(Countries).filter(([code]) => this.preferredCountries.includes(code))
+      );
+
+      // If preferred countries are found, update the countryList
+      if (Object.keys(preferredCountryList).length > 0) {
+        this.countryList = preferredCountryList;
+      }
+    }
+  }
+
+  /**
+   * Toggles the modal visibility and sets the dataSet to the current countryList.
+   */
   toggleModal(): void {
     this.dataSet = this.countryList
     this.showModal = !this.showModal;
@@ -76,34 +165,6 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
     this.toggleModal();
   }
 
-  /** Handles the input blur event. */
-  onBlur = () => {
-    this.inputFocused = false;
-  };
-
-  /**
-   * Handles the input focus event.
-   */
-  onFocus = (): void => {
-    this.inputFocused = true;
-  };
-
-  /** Callback function triggered on value change. */
-  onChange: (value: string) => void = () => { };
-
-  /** Callback function triggered on input touch. */
-  onTouched: () => void = () => { };
-
-  /**
-   * Writes a new value to the input.
-   * @param obj - The new value.
-   */
-  writeValue = (value: string): void => {
-    if (value !== undefined) {
-      this.extractValues(value)
-    }
-  };
-
   /**
    * Extracts the country code and phone number from the provided phone number string.
    * @param {string} phoneNumber - The input phone number string.
@@ -113,6 +174,7 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
     let country!: Country; // Variable to store the extracted country data
     let countryCode = ''; // Variable to store the extracted country code
     const countryCodes = Object.keys(Countries);
+    console.log("phoneNumber", phoneNumber);
 
     // Sort the country codes by length in descending order
     const sortedCodes = countryCodes.sort((a, b) => Countries[b].dialCode.length - Countries[a].dialCode.length);
@@ -140,50 +202,14 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
       }
       // If no country code is identified, consider the entire input as the phone number
       if (!countryCode) {
-        this.value = phoneNumber;
+        // Remove the "+" sign from the phone number if it exists
+        this.value = phoneNumber.replace('+', '');
       }
     }
     if (country) {
       this.selectedCountry = country
     }
   }
-
-  /**
-   * Registers a callback function to be executed when the input value changes.
-   * @param fn - The callback function.
-   */
-  registerOnChange = (fn: () => void): void => {
-    this.onChange = fn;
-  };
-
-  /**
-   * Registers a callback function to be executed when the input is touched.
-   * @param fn - The callback function.
-   */
-  registerOnTouched = (fn: () => void): void => {
-    this.onTouched = fn;
-  };
-
-  /**
-   * Sets the disabled state of the input.
-   * @param isDisabled - The disabled state.
-   */
-  setDisabledState = (isDisabled: boolean): void => {
-    this.disabled = isDisabled;
-  };
-
-  /**
-   * Validates the input control.
-   * @param control - The AbstractControl instance.
-   * @returns ValidationErrors if value is null.
-   */
-  validate = (): ValidationErrors | null => {
-    // validation logic here
-    if (!this.value || this.value === '' || !this.selectedCountry) {
-      return { required: true };
-    }
-    return null;
-  };
 
   /**
    * Tries to determine the selected country based on the provided input value.
@@ -218,6 +244,37 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
   }
 
   /**
+   * Filters the countries based on the provided search term and updates the dataset.
+   * @param {string} searchTerm - The term to search for within country names or dial codes.
+   * @returns {void}
+   */
+  filterCountries(searchTerm: string): void {
+    // Convert the searchTerm to lowercase for case-insensitive matching
+    searchTerm = searchTerm.toLowerCase();
+    // Filter the countryList based on the searchTerm and update dataSet
+    this.dataSet = Object.keys(this.countryList)
+      .filter(code =>
+        this.countryList[code].country.toLowerCase().includes(searchTerm) ||
+        this.countryList[code].dialCode.includes(searchTerm)
+      )
+      .reduce((obj: CountryData, code) => {
+        // Reduce the filtered keys back into an object
+        obj[code] = this.countryList[code];
+        return obj;
+      }, {});
+  }
+
+  /**
+   * Handles changes in the search input by invoking the filterCountries method with the input value.
+   * @param {Event} event - The event object from the search input.
+   * @returns {void}
+   */
+  onSearchChange(event: Event): void {
+    const searchTerm = (event.target as HTMLInputElement).value;
+    this.filterCountries(searchTerm);
+  }
+
+  /**
    * Retrieves the sanitized HTML representation of an icon string.
    * @param {string | undefined} iconString - The string representation of an SVG icon.
    * @returns {SafeHtml | undefined} The sanitized HTML representation of the icon string.
@@ -230,32 +287,15 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
   };
 
   /**
-   * Filters the countries based on the provided search term and updates the dataset.
-   * @param {string} searchTerm - The term to search for within country names or dial codes.
-   * @returns {void}
+   * Validates the input control.
+   * @param control - The AbstractControl instance.
+   * @returns ValidationErrors if value is null.
    */
-  filterCountries(searchTerm: string): void {
-    searchTerm = searchTerm.toLowerCase();
-    this.dataSet = Object.keys(this.countryList)
-      .filter(code =>
-        this.countryList[code].country.toLowerCase().includes(searchTerm) ||
-        this.countryList[code].dialCode.includes(searchTerm)
-      )
-      .reduce((obj: CountryData, code) => {
-        obj[code] = this.countryList[code];
-        return obj;
-      }, {});
-  }
-
-
-  /**
-   * Handles changes in the search input by invoking the filterCountries method with the input value.
-   * @param {Event} event - The event object from the search input.
-   * @returns {void}
-   */
-  onSearchChange(event: Event): void {
-    const searchTerm = (event.target as HTMLInputElement).value;
-    this.filterCountries(searchTerm);
-  }
-
+  validate = (): ValidationErrors | null => {
+    // if no value update validation with required
+    if (!this.value || this.value === '') {
+      return { required: true };
+    }
+    return null;
+  };
 }

@@ -1,28 +1,289 @@
-# AngularPhoneNumberInput
+# Angular Phone Number Input
+## Installation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
+`$ npm i angular-phone-number-input`
 
-## Development server
+Import into your module file:
+`import { AngularPhoneNumberInput } from 'angular-phone-number-input'`;
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Add `AngularPhoneNumberInput` to your module file:
+`imports: [AngularPhoneNumberInput]`
+## Demo
+Will add a demo soon! :)
+## Example
+```
+@Component({
+  selector: 'app-root',
+  template: `
+    <form [formGroup]="myForm">
+      <angular-phone-number-input
+        formControlName="phoneNumber"
+        [defaultCountry]="'LK'"
+        [preferredCountries]="['LK', 'IN', 'GB']"
+        [error]="myForm.get('phoneNumber')?.touched && myForm.get('phoneNumber')?.invalid"
+      ></angular-phone-number-input>
+    </form>
+  `,
+  styles: ``
+})
+export class AppComponent {
+  myForm: FormGroup = new FormGroup({
+    phoneNumber: new FormControl(''),
+  });
+```
 
-## Code scaffolding
+## Options
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+| Options               | Type          | Default           | Description                                   |
+| --------------------- | ------------- | ------------------| --------------------------------------------- |
+| defaultCountry        | `string`      | `null`            | Set the default country from our list.                 |
+| preferredCountries    | `string[]`    | `All countries`   | List the country codes to be displayed |
+| error                 | `boolean`     | `false`           | To display the error status in the input box       |
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-# angular-phone-number-input-app
+## Country list
+```
+"AF":"Afghanistan",
+"AX":"Aland Islands",
+"AL":"Albania",
+"DZ":"Algeria",
+"AS":"AmericanSamoa",
+"AD":"Andorra",
+"AO":"Angola",
+"AI":"Anguilla",
+"AQ":"Antarctica",
+"AG":"Antigua and Barbuda",
+"AR":"Argentina",
+"AM":"Armenia",
+"AW":"Aruba",
+"AC":"Ascension Island",
+"AU":"Australia",
+"AT":"Austria",
+"AZ":"Azerbaijan",
+"BS":"Bahamas",
+"BH":"Bahrain",
+"BD":"Bangladesh",
+"BB":"Barbados",
+"BY":"Belarus",
+"BE":"Belgium",
+"BZ":"Belize",
+"BJ":"Benin",
+"BM":"Bermuda",
+"BT":"Bhutan",
+"BO":"Bolivia",
+"BA":"Bosnia and Herzegovina",
+"BW":"Botswana",
+"BR":"Brazil",
+"IO":"British Indian Ocean Territory",
+"BN":"Brunei Darussalam",
+"BG":"Bulgaria",
+"BF":"Burkina Faso",
+"BI":"Burundi",
+"KH":"Cambodia",
+"CM":"Cameroon",
+"CA":"Canada",
+"CV":"Cape Verde",
+"KY":"Cayman Islands",
+"CF":"Central African Republic",
+"TD":"Chad",
+"CL":"Chile",
+"CN":"China",
+"CX":"Christmas Island",
+"CC":"Cocos (Keeling) Islands",
+"CO":"Colombia",
+"KM":"Comoros",
+"CG":"Congo",
+"CK":"Cook Islands",
+"CR":"Costa Rica",
+"CI":"Cote d'Ivoire",
+"HR":"Croatia",
+"CU":"Cuba",
+"CY":"Cyprus",
+"CZ":"Czech Republic",
+"CD":"Democratic Republic of the Congo",
+"DK":"Denmark",
+"DJ":"Djibouti",
+"DM":"Dominica",
+"DO":"Dominican Republic",
+"EC":"Ecuador",
+"EG":"Egypt",
+"SV":"El Salvador",
+"GQ":"Equatorial Guinea",
+"ER":"Eritrea",
+"EE":"Estonia",
+"SZ":"Eswatini",
+"ET":"Ethiopia",
+"FK":"Falkland Islands (Malvinas)",
+"FO":"Faroe Islands",
+"FJ":"Fiji",
+"FI":"Finland",
+"FR":"France",
+"GF":"French Guiana",
+"PF":"French Polynesia",
+"GA":"Gabon",
+"GM":"Gambia",
+"GE":"Georgia",
+"DE":"Germany",
+"GH":"Ghana",
+"GI":"Gibraltar",
+"GR":"Greece",
+"GL":"Greenland",
+"GD":"Grenada",
+"GP":"Guadeloupe",
+"GU":"Guam",
+"GT":"Guatemala",
+"GG":"Guernsey",
+"GN":"Guinea",
+"GW":"Guinea-Bissau",
+"GY":"Guyana",
+"HT":"Haiti",
+"VA":"Holy See (Vatican City State)",
+"HN":"Honduras",
+"HK":"Hong Kong",
+"HU":"Hungary",
+"IS":"Iceland",
+"IN":"India",
+"ID":"Indonesia",
+"IR":"Iran",
+"IQ":"Iraq",
+"IE":"Ireland",
+"IM":"Isle of Man",
+"IL":"Israel",
+"IT":"Italy",
+"JM":"Jamaica",
+"JP":"Japan",
+"JE":"Jersey",
+"JO":"Jordan",
+"KZ":"Kazakhstan",
+"KE":"Kenya",
+"KI":"Kiribati",
+"KP":"Korea, Democratic People's Republic of Korea",
+"KR":"Korea, Republic of South Korea",
+"XK":"Kosovo",
+"KW":"Kuwait",
+"KG":"Kyrgyzstan",
+"LA":"Laos",
+"LV":"Latvia",
+"LB":"Lebanon",
+"LS":"Lesotho",
+"LR":"Liberia",
+"LY":"Libya",
+"LI":"Liechtenstein",
+"LT":"Lithuania",
+"LU":"Luxembourg",
+"MO":"Macau",
+"MG":"Madagascar",
+"MW":"Malawi",
+"MY":"Malaysia",
+"MV":"Maldives",
+"ML":"Mali",
+"MT":"Malta",
+"MH":"Marshall Islands",
+"MQ":"Martinique",
+"MR":"Mauritania",
+"MU":"Mauritius",
+"YT":"Mayotte",
+"MX":"Mexico",
+"FM":"Micronesia, Federated States of Micronesia",
+"MD":"Moldova",
+"MC":"Monaco",
+"MN":"Mongolia",
+"ME":"Montenegro",
+"MS":"Montserrat",
+"MA":"Morocco",
+"MZ":"Mozambique",
+"MM":"Myanmar",
+"NA":"Namibia",
+"NR":"Nauru",
+"NP":"Nepal",
+"NL":"Netherlands",
+"NC":"New Caledonia",
+"NZ":"New Zealand",
+"NI":"Nicaragua",
+"NE":"Niger",
+"NG":"Nigeria",
+"NU":"Niue",
+"NF":"Norfolk Island",
+"MK":"North Macedonia",
+"MP":"Northern Mariana Islands",
+"NO":"Norway",
+"OM":"Oman",
+"PK":"Pakistan",
+"PW":"Palau",
+"PS":"Palestine",
+"PA":"Panama",
+"PG":"Papua New Guinea",
+"PY":"Paraguay",
+"PE":"Peru",
+"PH":"Philippines",
+"PN":"Pitcairn",
+"PL":"Poland",
+"PT":"Portugal",
+"PR":"Puerto Rico",
+"QA":"Qatar",
+"RE":"Reunion",
+"RO":"Romania",
+"RU":"Russia",
+"RW":"Rwanda",
+"BL":"Saint Barthelemy",
+"SH":"Saint Helena, Ascension and Tristan Da Cunha",
+"KN":"Saint Kitts and Nevis",
+"LC":"Saint Lucia",
+"MF":"Saint Martin",
+"PM":"Saint Pierre and Miquelon",
+"VC":"Saint Vincent and the Grenadines",
+"WS":"Samoa",
+"SM":"San Marino",
+"ST":"Sao Tome and Principe",
+"SA":"Saudi Arabia",
+"SN":"Senegal",
+"RS":"Serbia",
+"SC":"Seychelles",
+"SL":"Sierra Leone",
+"SG":"Singapore",
+"SX":"Sint Maarten",
+"SK":"Slovakia",
+"SI":"Slovenia",
+"SB":"Solomon Islands",
+"SO":"Somalia",
+"ZA":"South Africa",
+"GS":"South Georgia and the South Sandwich Islands",
+"SS":"South Sudan",
+"ES":"Spain",
+"LK":"Sri Lanka",
+"SD":"Sudan",
+"SR":"Suriname",
+"SJ":"Svalbard and Jan Mayen",
+"SE":"Sweden",
+"CH":"Switzerland",
+"SY":"Syrian Arab Republic",
+"TW":"Taiwan",
+"TJ":"Tajikistan",
+"TZ":"Tanzania, United Republic of Tanzania",
+"TH":"Thailand",
+"TL":"Timor-Leste",
+"TG":"Togo",
+"TK":"Tokelau",
+"TO":"Tonga",
+"TT":"Trinidad and Tobago",
+"TN":"Tunisia",
+"TR":"Turkey",
+"TM":"Turkmenistan",
+"TC":"Turks and Caicos Islands",
+"TV":"Tuvalu",
+"UG":"Uganda",
+"UA":"Ukraine",
+"AE":"United Arab Emirates",
+"GB":"United Kingdom",
+"US":"United States",
+"UY":"Uruguay",
+"UZ":"Uzbekistan",
+"VU":"Vanuatu",
+"VE":"Venezuela, Bolivarian Republic of Venezuela",
+"VN":"Vietnam",
+"VG":"Virgin Islands, British",
+"VI":"Virgin Islands, U.S.",
+"WF":"Wallis and Futuna",
+"YE":"Yemen",
+"ZM":"Zambia",
+"ZW":"Zimbabwe"
+```
