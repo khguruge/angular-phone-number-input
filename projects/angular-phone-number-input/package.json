@@ -1,6 +1,6 @@
 {
   "name": "angular-phone-number-input",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "peerDependencies": {
     "@angular/common": "^17.0.0",
     "@angular/core": "^17.0.0"
@@ -14,5 +14,18 @@
     "url": "https://github.com/khguruge/angular-phone-number-input.git"
   },
   "homepage": "https://github.com/khguruge/angular-phone-number-input",
-  "sideEffects": false
+  "sideEffects": false,
+  "license": "MIT",
+  "keywords": [
+    "angular",
+    "angular 17",
+    "phone number",
+    "phone number input",
+    "ngx phone number input",
+    "angular phone number input",
+    "tel number",
+    "tel input",
+    "angular tel input",
+    "angular tel number input"
+  ]
 }
