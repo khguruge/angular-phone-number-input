@@ -13,6 +13,7 @@ import { Countries } from '../assets/country-dataset';
 import { CountryData } from '../data-types/countryList';
 import { globeSVG } from '../assets/globe-svg';
 import { Country } from '../data-types/country';
+import { isValidPhoneNumber } from 'libphonenumber-js';
 
 @Component({
   selector: 'angular-phone-number-input',
@@ -292,10 +293,17 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
    * @returns ValidationErrors if value is null.
    */
   validate = (): ValidationErrors | null => {
+    const fullPhoneNumber = this.selectedCountry ? this.selectedCountry.dialCode + (this.value || '') : '+' + this.value || '';
     // if no value update validation with required
     if (!this.value || this.value === '') {
       return { required: true };
     }
+
+    // check valid phone number or not with libphonenumber-js
+    if (!isValidPhoneNumber(fullPhoneNumber.toString())) {
+      return { status: "INVALID" };
+    }
+
     return null;
   };
 }

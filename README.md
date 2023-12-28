@@ -1,15 +1,31 @@
 # Angular Phone Number Input
 ## Installation
+```
+npm i angular-phone-number-input
+```
+Have implemented country-specific validations using [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js)
 
-`$ npm i angular-phone-number-input`
+`Install Dependencies`
+```
+npm i libphonenumber-js
+```
 
 Import into your module file:
-`import { AngularPhoneNumberInput } from 'angular-phone-number-input'`;
+```
+import { AngularPhoneNumberInput } from 'angular-phone-number-input';
+```
 
 Add `AngularPhoneNumberInput` to your module file:
-`imports: [AngularPhoneNumberInput]`
+```
+imports: [AngularPhoneNumberInput]
+```
+
 ## Demo
-Will add a demo soon! :)
+
+[Demo with angular 17](https://stackblitz.com/edit/stackblitz-starters-2grnkw?file=src%2Fmain.ts)
+
+![image](https://kasun.s3.ap-south-1.amazonaws.com/angular-phone-number-input/apni_ss.png)
+
 ## Example
 ```
 @Component({
