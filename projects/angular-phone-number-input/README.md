@@ -1,8 +1,13 @@
 # Angular Phone Number Input
 ## Installation
-
 ```
 npm i angular-phone-number-input
+```
+Have implemented country-specific validations using [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js)
+
+`Install Dependencies`
+```
+npm i libphonenumber-js
 ```
 
 Import into your module file:
@@ -14,8 +19,6 @@ Add `AngularPhoneNumberInput` to your module file:
 ```
 imports: [AngularPhoneNumberInput]
 ```
-
-Have implemented country-specific validations using [libphonenumber-js](https://www.npmjs.com/package/libphonenumber-js)
 
 ## Demo
 
