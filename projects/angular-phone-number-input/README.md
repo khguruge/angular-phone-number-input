@@ -7,7 +7,7 @@ Have implemented country-specific validations using [libphonenumber-js](https://
 
 `Install Dependencies`
 ```
-npm i libphonenumber-js
+npm i libphonenumber-js -D
 ```
 
 Import into your module file:
@@ -52,9 +52,10 @@ export class AppComponent {
 
 | Options               | Type          | Default           | Description                                   |
 | --------------------- | ------------- | ------------------| --------------------------------------------- |
-| defaultCountry        | `string`      | `null`            | Set the default country from our list.                 |
-| preferredCountries    | `string[]`    | `All countries`   | List the country codes to be displayed |
-| error                 | `boolean`     | `false`           | To display the error status in the input box       |
+| defaultCountry        | `string`      | `null`            | Set the default country from our list.        |
+| preferredCountries    | `string[]`    | `All countries`   | List the country codes to be displayed        |
+| error                 | `boolean`     | `false`           | To display the error status in the input box  |
+| border                | `boolean`     | `true`            | To display borders around the input box       |
 
 ## Country list
 ```

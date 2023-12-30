@@ -9,55 +9,55 @@ input[type='number'] {
     -moz-appearance: textfield;
 }
 
+// colors
+$black-neutral: rgba(0, 0, 0, 0.1);
+$white : rgb(255, 255, 255);
+$blue : #0043CE;
+$red : #DD3130;
+
 .wrap {
     position: relative;
-    border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+    border-bottom: 1px solid $black-neutral;
     border-radius: 4px;
     height: 52px;
     padding: 0px 12px;
-    background-color: white;
-
+    background-color: $white;
 
     .modal-wrap {
         position: absolute;
-        background-color: rgb(255, 255, 255);
+        background-color: $white;
         top: 55px;
         left: 0px;
-        border: 1px solid rgb(0, 0, 0, 0.1);
+        border: 1px solid $black-neutral;
         border-radius: 4px;
         padding: 6px;
-        .country-list{
+
+        .country-list {
             margin-top: 10px;
             overflow: -moz-scrollbars-none;
             overflow-y: scroll;
             width: 280px;
             max-height: 250px;
+
             &::-webkit-scrollbar {
                 display: none;
             }
         }
-
-       
 
         .modal-country-wrap {
             width: 100%;
             padding: 5px 0px;
 
             &:hover {
-                background-color: rgba(0, 0, 0, 0.1);
+                background-color: $black-neutral;
             }
         }
 
-        .flag{
-            width: 20px;
-            height: auto;
-        }
-
-        .search-box{
+        .search-box {
             border: none;
             outline: none;
             width: 100%;
-            border-bottom: 1px solid rgb(0, 0, 0, 0.1);
+            border-bottom: 1px solid $black-neutral;
             font-size: 13px;
         }
     }
@@ -75,7 +75,8 @@ input[type='number'] {
         line-height: 24px;
         letter-spacing: -0.011px;
     }
-    .flag{
+
+    .flag {
         width: 20px;
         height: auto;
     }
@@ -83,21 +84,25 @@ input[type='number'] {
 
 
 .active {
-    border-bottom: 1px solid #0043CE;
- }
+    border-bottom: 1px solid $blue !important;
+}
 
- .error{
-    border-bottom: 1px solid #DD3130;
- }
+.error {
+    border-bottom: 1px solid $red !important;
+}
 
-.flex{
+.border {
+    border: 1px solid $black-neutral;
+}
+
+.flex {
     display: flex;
 }
 
-.align-center{
+.align-center {
     align-items: center;
 }
 
-.ml-5{
+.ml-5 {
     margin-left: 5px;
 }
