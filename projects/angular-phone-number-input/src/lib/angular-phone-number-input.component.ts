@@ -37,6 +37,7 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
   @Input() error: boolean | undefined = false;
   @Input() defaultCountry!: string;
   @Input() preferredCountries!: string[];
+  @Input() border: boolean = true;
 
   sanitizer = inject(DomSanitizer);
   countryList: CountryData = Countries;
