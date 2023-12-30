@@ -174,9 +174,7 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
    */
   extractValues = (phoneNumber: string) => {
     let country!: Country; // Variable to store the extracted country data
-    let countryCode = ''; // Variable to store the extracted country code
     const countryCodes = Object.keys(Countries);
-    console.log("phoneNumber", phoneNumber);
 
     // Sort the country codes by length in descending order
     const sortedCodes = countryCodes.sort((a, b) => Countries[b].dialCode.length - Countries[a].dialCode.length);
@@ -185,32 +183,27 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
     for (const code of sortedCodes) {
       if (phoneNumber.startsWith(Countries[code].dialCode)) {
         country = Countries[code];
-        break;
+        this.value = phoneNumber.substring(country.dialCode.length);
+        this.selectedCountry = country
+        return;
       }
     }
-    // If a matching country code is found, extract the country code and phone number
-    if (country) {
-      countryCode = country.dialCode;
-      this.value = phoneNumber.substring(countryCode.length);
-    } else {
-      // If no matching country code is found, attempt to extract country code based on length (1 to 4 digits)
-      for (let i = 1; i <= 4; i++) {
-        const potentialCode = phoneNumber.substring(0, i);
-        if (countryCodes.some(code => Countries[code].dialCode === `+${potentialCode}`)) {
-          countryCode = `+${potentialCode}`;
-          this.value = phoneNumber.substring(i);
-          break;
-        }
-      }
-      // If no country code is identified, consider the entire input as the phone number
-      if (!countryCode) {
-        // Remove the "+" sign from the phone number if it exists
-        this.value = phoneNumber.replace('+', '');
+
+    // If no matching country code is found, attempt to extract country code based on length (1 to 4 digits)
+    for (let i = 1; i <= 4; i++) {
+      const potentialCode = phoneNumber.substring(0, i);
+      const matchingCode = countryCodes.find(codeKey => Countries[codeKey].dialCode === `+${potentialCode}`);
+      if (matchingCode) {
+        country = Countries[matchingCode];
+        this.value = phoneNumber.substring(i);
+        this.selectedCountry = country;
+        return;
       }
     }
-    if (country) {
-      this.selectedCountry = country
-    }
+
+    // If no country code is identified, consider the entire input as the phone number
+    this.value = phoneNumber.replace('+', '');
+    return;
   }
 
   /**
@@ -222,7 +215,7 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
     if (this.value) {
       // temp number to hold the input value
       const tempNum = '+' + this.value.toString();
-      if (!this.selectedCountry && this.value && tempNum.length === 5) {
+      if (!this.selectedCountry && tempNum.length === 5) {
         const countryCodes = Object.keys(Countries);
         const sortedCodes = countryCodes.sort((a, b) => Countries[b].dialCode.length - Countries[a].dialCode.length);
         for (const code of sortedCodes) {
