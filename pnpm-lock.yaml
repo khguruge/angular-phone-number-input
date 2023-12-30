@@ -29,6 +29,9 @@ dependencies:
   '@angular/router':
     specifier: ^17.0.0
     version: 17.0.8(@angular/common@17.0.8)(@angular/core@17.0.8)(@angular/platform-browser@17.0.8)(rxjs@7.8.1)
+  libphonenumber-js:
+    specifier: ^1.10.53
+    version: 1.10.53
   rxjs:
     specifier: ~7.8.0
     version: 7.8.1
@@ -5474,6 +5477,10 @@ packages:
       needle: 3.3.1
       source-map: 0.6.1
     dev: true
+
+  /libphonenumber-js@1.10.53:
+    resolution: {integrity: sha512-sDTnnqlWK4vH4AlDQuswz3n4Hx7bIQWTpIcScJX+Sp7St3LXHmfiax/ZFfyYxHmkdCvydOLSuvtAO/XpXiSySw==}
+    dev: false
 
   /license-webpack-plugin@4.0.2(webpack@5.89.0):
     resolution: {integrity: sha512-771TFWFD70G1wLTC4oU2Cw4qvtmNrIw+wRvBtn+okgHl7slJVi7zfNcdmqDL72BojM30VNJ2UHylr1o77U37Jw==}
