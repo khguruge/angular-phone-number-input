@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, inject } from '@angular/core';
+import { Component, EventEmitter, Input, Output, forwardRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ControlValueAccessor,
@@ -39,6 +39,8 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
   @Input() defaultCountry!: string;
   @Input() preferredCountries!: string[];
   @Input() border: boolean = true;
+  @Input() clearIcon: boolean = false;
+  @Output() inputChanged = new EventEmitter<number | string | null>();
 
   sanitizer = inject(DomSanitizer);
   countryList: CountryData = Countries;
@@ -236,6 +238,7 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
   onInputChanged(): void {
     this.setFullPhoneNumber();
     this.getCountryWithInput();
+    this.inputChanged.emit(this.value);
   }
 
   /**
@@ -300,4 +303,13 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
 
     return null;
   };
+
+  /**
+   * Clears the input value and triggers related events.
+   */
+  clearInput(): void {
+    this.value = '';
+    this.onChange(this.value);
+    this.inputChanged.emit(this.value);
+  }
 }
