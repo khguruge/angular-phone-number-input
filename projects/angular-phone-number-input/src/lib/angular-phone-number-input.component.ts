@@ -1,12 +1,14 @@
 import { Component, Input, forwardRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   ControlValueAccessor,
   FormsModule,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
   ValidationErrors,
   Validator,
+  Validators,
 } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Countries } from '../assets/country-dataset';
@@ -73,7 +75,7 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
    * @param obj - The new value.
    */
   writeValue = (value: string): void => {
-    if (value !== undefined) {
+    if (!!value) {
       this.extractValues(value)
     }
   };
@@ -286,11 +288,12 @@ export class AngularPhoneNumberInput implements ControlValueAccessor, Validator 
    * @param control - The AbstractControl instance.
    * @returns ValidationErrors if value is null.
    */
-  validate = (): ValidationErrors | null => {
+  validate = (control: AbstractControl): ValidationErrors | null => {
     const fullPhoneNumber = this.selectedCountry ? this.selectedCountry.dialCode + (this.value || '') : '+' + this.value || '';
-    // if no value update validation with required
+    // if no value update and inputted control has validation with required or return true
     if (!this.value || this.value === '') {
-      return { required: true };
+      if (control.hasValidator(Validators.required)) return { required: true }
+      return null;
     }
 
     // check valid phone number or not with libphonenumber-js
